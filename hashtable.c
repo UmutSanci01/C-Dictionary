@@ -71,6 +71,8 @@ static int doubleHash(const void* key, int size, int attempt)
 
 	return finalHash;
 }
+
+// The key and value are copied into newly allocated memory.
 static Item* allocItem(const void* key, const void* value)
 {
 	Item* item = malloc(sizeof(Item));
@@ -264,6 +266,8 @@ void Delete(Table* table, const void* key)
 	}
 }
 
+// The key must be an address of a type similar to those in MyTypes.h.
+// Returns NULL if the key is not found in the table.
 Item *Search(Table* table, const void* key)
 {
 	// Search for the item with the given key

@@ -42,7 +42,7 @@ typedef struct tagString64 {
     char text[64];
 } String64;
 
-
+// {enum data type, size of data type}
 ItemData data_str = {STRING, sizeof(String)};
 ItemData data_int = {INT, sizeof(Integer)};
 ItemData data_intar = {INTAR, sizeof(IntAr)};

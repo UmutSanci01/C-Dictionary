@@ -12,7 +12,7 @@ typedef struct
 }
 Table;
 
-
+// Key and value must be pointers to types, like the types declared in the MyTypes.h file.
 void Insert(Table* table, const void* key, const void* value);
 void Delete(Table* table, const void* key);
 Item *Search(Table* table, const void* key);

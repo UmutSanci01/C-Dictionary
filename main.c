@@ -10,37 +10,43 @@ int main(int argc, char **argv)
 {
 	Table *table = AllocTable();
 
-	// TEST CODE
-	int keys[10] = {47, 15, 28, 61, 5, 36, 12, 19, 3, 22};
-    int vals[10] = {82, 93, 74, 90, 53, 67, 84, 41, 76, 8};
-
-
-	// Insert
+	int integers[10] = { 1, 2, 3, 4, 5, 11, 22, 33, 44, 55 };
+	char* strings[10] = { "aa", "bb", "cc", "DD", "tt", "Umudo", "M", "qwerty", "Denek", "a" };
+	
 	for (int i = 0; i < 10; i++)
 	{
-		Integer key = {data_int, keys[i]};
-		Integer val = {data_int, vals[i]};
+		Integer key_int = { data_int, integers[i] };
+		String key_str = { data_str, strings[i] };
 
-		Insert(table, &key, &val);
+		Integer value_int = { data_int, integers[i] };
+		String value_str = { data_str, strings[i] };
+
+		Insert(table, &key_int, &value_str);
+		Insert(table, &key_str, &value_int);
 	}
+
 	printf("table count : %d\n", table->count);
 
-	// Print
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < table->count; i++)
 	{
-		Integer key = {data_int, keys[i]};
+		Item *item = table->items[i];
 
-		Item *item = Search(table, &key);
-		if (item)
+		if (!item) continue;
+		if (item->type_key == INT)
 		{
-			Integer *key = (Integer *)item->key;
-			Integer *val = (Integer *)item->value;
-
-			printf("%d : %d\n", key->value, val->value);
+			Integer* key = (Integer*)item->key;
+			String* value = (String*)item->value;
 			
+			printf("key %d\tvalue %s\n", key->value, value->text);
+		}
+		else if (item->type_key == STRING)
+		{
+			String* key = (String*)item->key;
+			Integer* value = (Integer*)item->value;
+
+			printf("key %s\tvalue %d\n", key->text, value->value);
 		}
 	}
-	// TEST CODE
 
 	FreeTable(table);
 	
@@ -50,7 +56,74 @@ int main(int argc, char **argv)
 
 
 
-// TESTS
+/* INTEGER - STRING TEST
+int keys[10] = { 1, 2, 3, 4, 5, 11, 22, 33, 44, 55 };
+char* values[10] = { "aa", "bb", "cc", "DD", "tt", "Umudo", "M", "qwerty", "Denek", "a" };
+
+// INSERT
+for (int i = 0; i < 10; i++)
+{
+	Integer key = { data_int, keys[i] };
+	String value = { data_str, values[i] };
+
+	Insert(table, &key, &value);
+}
+
+// PRINT
+for (int i = 0; i < 10; i++)
+{
+	Integer search_key = { data_int, keys[i] };
+
+	Item* item = Search(table, &search_key);
+	if (!item) continue;
+
+	Integer* key = (Integer*)item->key;
+	String* value = (String*)item->value;
+	printf("key %d\tvalue %s\n", key->value, value->text);
+}
+
+Item* item = Search(table, &(Integer){data_int, 11});
+if (item)
+{
+	printf("key 11\tvalue %s\n", ((String*)item->value)->text);
+}
+
+*/
+
+
+/* INTEGER TEST
+
+int keys[10] = { 47, 15, 28, 61, 5, 36, 12, 19, 3, 22 };
+int vals[10] = { 82, 93, 74, 90, 53, 67, 84, 41, 76, 8 };
+
+
+// Insert
+for (int i = 0; i < 10; i++)
+{
+	Integer key = { data_int, keys[i] };
+	Integer val = { data_int, vals[i] };
+
+	Insert(table, &key, &val);
+}
+printf("table count : %d\n", table->count);
+
+// Print
+for (int i = 0; i < 10; i++)
+{
+	Integer key = { data_int, keys[i] };
+
+	Item* item = Search(table, &key);
+	if (item)
+	{
+		Integer* key = (Integer*)item->key;
+		Integer* val = (Integer*)item->value;
+
+		printf("%d : %d\n", key->value, val->value);
+
+	}
+}
+*/
+
 
 /* INTAR TEST
     // Create 5 dynamic integer arrays
