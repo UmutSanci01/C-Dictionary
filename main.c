@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
 	printf("table count : %d\n", table->count);
 
-	for (int i = 0; i < table->count; i++)
+	for (int i = 0; i < table->size; i++)
 	{
 		Item *item = table->items[i];
 

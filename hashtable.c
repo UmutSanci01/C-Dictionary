@@ -48,12 +48,17 @@ static int hash(const void* key, int prime, int size)
 	// const int n = strlen(key);
 	int n = data_key->item_size;
 	int hash = 0;
+	int pPow = 1;
 	for (int i = 0; i < n; i++)
 	{
 		if (str_key[i] < 0) continue;
 
-		hash += ((unsigned)pow(prime, i) % size) * (str_key[i] % size);
+		// The Polynomial Rolling Hash 
+		//hash += ((unsigned)pow(prime, i) % size) * (str_key[i] % size);
+		hash += (pPow * str_key[i]) % size;
 		hash %= size;
+
+		pPow = (pPow * prime) % size;
 	}
 
 	return hash;
